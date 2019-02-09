@@ -60,4 +60,16 @@ class GeoIpInfo
     {
         return collect($this->toArray())->toJson(JSON_PRETTY_PRINT);
     }
+
+    public function toFormat($format)
+    {
+        switch ($format) {
+            case 'string':
+                return $this->toString();
+            case 'json':
+                return $this->toJson();
+            default:
+                throw new \Exception("format '$format' not implement");
+        }
+    }
 }

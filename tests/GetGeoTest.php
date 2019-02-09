@@ -1,25 +1,17 @@
 <?php
 
-namespace App\Tests\GeoIpApi;
+namespace App\Tests;
 
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
+use \App\GetGeo;
 
-use \App\GeoIpApi\ApiInterface;
-use \App\GeoIpInfo;
-
-class IpApiService extends TestCase
+class GetGeoTest extends TestCase
 {
     protected $container;
-
-    protected function setUp(): void
-    {
-        $this->container = \App\AppFactory::buildContainer();
-    }
 
     protected function buildHttpClient(string $body)
     {
@@ -38,15 +30,20 @@ class IpApiService extends TestCase
             'lat' => 37.4229,
             'lon' => -122.085,
         ];
-        $expectInfo = new GeoIpInfo($data);
-        $this->container->set(
-            ClientInterface::class,
-            $this->buildHttpClient(json_encode($data))
+        $getGeo = new GetGeo([
+            ClientInterface::class => $this->buildHttpClient(json_encode($data))
+        ]);
+
+        $result = $getGeo->getInfoByIp($ip, ['format' => 'json']);
+
+        $this->assertJsonStringEqualsJsonString(
+            json_encode([
+                'city' => $data['city'],
+                'country' => $data['country'],
+                'latitude' => $data['lat'],
+                'longitude' => $data['lon'],
+            ]),
+            $result
         );
-        $api = $this->container->get(ApiInterface::class);
-
-        $info = $api->requestGeoIpInfoByIp($ip);
-
-        $this->assertEquals($expectInfo, $info);
     }
 }

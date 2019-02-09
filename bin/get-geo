@@ -9,6 +9,6 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-$app = \App\AppFactory::createGetGeoCli();
+$app = \App\Cli::createGetGeoCli();
 $app($argv);
 
