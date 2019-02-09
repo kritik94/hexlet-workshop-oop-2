@@ -5,8 +5,7 @@ namespace App;
 use DI;
 use \GuzzleHttp\ClientInterface;
 use \GuzzleHttp\Client;
-use \App\GeoIpApi\ApiInterface;
-use \App\GeoIpApi\IpApiService;
+use \App\GetGeo\GetGeo;
 use Stringy\Stringy;
 
 class Cli
@@ -50,6 +49,21 @@ class Cli
                 ->toUpperCase();
 
             echo $medianFilename . PHP_EOL;
+        };
+    }
+
+    public static function createWeatherCli()
+    {
+        return function ($argv) {
+            $optind = null;
+            $opts = collect(getopt('s:', ['service:'], $optind));
+            $posArgs = array_slice($argv, $optind);
+
+            $city = $posArgs[0] ?? null;
+
+            $weatherApp = new Weather(['service' => $service]);
+
+            dump($weather->getWeatherInCity($city));
         };
     }
 }

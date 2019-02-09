@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+namespace App\GetGeo;
 
 use DI;
 use \GuzzleHttp\ClientInterface;
 use \GuzzleHttp\Client;
-use \App\GeoIpApi\ApiInterface;
-use \App\GeoIpApi\IpApiService;
+use \App\GetGeo\GeoIpApi\ApiInterface;
+use \App\GetGeo\GeoIpApi\IpApiService;
 
 class GetGeo
 {

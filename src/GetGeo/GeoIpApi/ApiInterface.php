@@ -1,8 +1,8 @@
 <?php
 
-namespace App\GeoIpApi;
+namespace App\GetGeo\GeoIpApi;
 
-use \App\GeoIpInfo;
+use \App\GetGeo\GeoIpInfo;
 
 interface ApiInterface
 {

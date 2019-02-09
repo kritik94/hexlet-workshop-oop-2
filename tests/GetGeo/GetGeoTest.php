@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\GetGeo;
 
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
-use \App\GetGeo;
+use \App\GetGeo\GetGeo;
 
 class GetGeoTest extends TestCase
 {
