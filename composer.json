@@ -6,7 +6,7 @@
         }
     ],
     "type": "project",
-    "bin": ["bin/get-geo"]
+    "bin": ["bin/get-geo"],
     "scripts": {
         "phpcs": "phpcs",
         "test": "phpunit tests"
