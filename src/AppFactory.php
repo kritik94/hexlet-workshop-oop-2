@@ -2,11 +2,28 @@
 
 namespace App;
 
+use DI;
+
 class AppFactory
 {
+    public static function buildContainer($additional = [])
+    {
+        $defenition = [
+            \GuzzleHttp\ClientInterface::class => DI\create(\GuzzleHttp\Client::class),
+            \App\GeoIpApi\ApiInterface::class => DI\autowire(\App\GeoIpApi\IpApiService::class),
+        ];
+
+        return (new DI\ContainerBuilder)
+            ->useAutowiring(true)
+            ->addDefinitions(array_replace_recursive($defenition, $additional))
+            ->build();
+    }
+
     public static function createGetGeoCli()
     {
-        return function ($argv) {
+        $container = static::buildContainer();
+
+        return function ($argv) use ($container) {
             $optind = null;
             $opts = collect(getopt('j', ['json'], $optind));
             $posArgs = array_slice($argv, $optind);
@@ -14,10 +31,9 @@ class AppFactory
             $toJson = $opts->has('j') || $opts->has('json');
             $ip = $posArgs[0] ?? null;
 
-            $httpClient = new \GuzzleHttp\Client();
-            $getGeo = new GetGeo($httpClient);
+            $api = $container->get(\App\GeoIpApi\ApiInterface::class);
 
-            $info = $getGeo->getInfoByIp($ip);
+            $info = $api->requestGeoIpInfoByIp($ip);
 
             if ($toJson) {
                 echo $info->toJson() . PHP_EOL;

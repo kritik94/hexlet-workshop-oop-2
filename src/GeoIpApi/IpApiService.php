@@ -1,8 +1,11 @@
 <?php
 
-namespace App;
+namespace App\GeoIpApi;
 
-class GetGeo
+use \App\GeoIpInfo;
+use \GuzzleHttp\ClientInterface;
+
+class IpApiService implements ApiInterface
 {
     const BASE_URL = 'http://ip-api.com/json/';
 
@@ -11,16 +14,16 @@ class GetGeo
      */
     private $httpClient;
 
-    public function __construct(\GuzzleHttp\Client $httpClient)
+    public function __construct(ClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }
 
-    public function getInfoByIp(string $ip = null)
+    public function requestGeoIpInfoByIp(string $ip = null): GeoIpInfo
     {
         $url = static::BASE_URL . $ip;
 
-        $response = $this->httpClient->get($url);
+        $response = $this->httpClient->request('GET', $url);
         $metadata = json_decode($response->getBody(), true);
 
         return new GeoIpInfo($metadata);

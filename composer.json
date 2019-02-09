@@ -13,6 +13,7 @@
     },
     "require": {
         "php": ">=7.2",
+        "php-di/php-di": "6.0.5",
         "guzzlehttp/guzzle": "6.3.3",
         "tightenco/collect": "5.7.25",
         "danielstjules/stringy": "3.1.0"
