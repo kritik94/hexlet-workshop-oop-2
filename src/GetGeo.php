@@ -23,6 +23,6 @@ class GetGeo
         $response = $this->httpClient->get($url);
         $metadata = json_decode($response->getBody(), true);
 
-        return $metadata;
+        return new GeoIpInfo($metadata);
     }
 }

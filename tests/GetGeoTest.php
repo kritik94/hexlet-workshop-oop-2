@@ -18,25 +18,24 @@ class GetGeoTest extends TestCase
     {
         $info = $this->getGeo->getInfoByIp();
 
-        $this->assertArrayHasKey('city', $info);
-        $this->assertArrayHasKey('country', $info);
-        $this->assertArrayHasKey('lat', $info);
-        $this->assertArrayHasKey('lon', $info);
+        $this->assertNotEmpty($info->getCity());
+        $this->assertNotEmpty($info->getCountry());
+        $this->assertNotEmpty($info->getLatitude());
+        $this->assertNotEmpty($info->getLongitude());
     }
 
     public function testWithIp()
     {
         $ip = '8.8.8.8';
-        $expectCity = 'Mountain View';
-        $expectCountry = 'United States';
-        $expectLat = 37.4229;
-        $expectLon = -122.085;
+        $expectInfo = new \App\GeoIpInfo([
+            'city' => 'Mountain View',
+            'country' => 'United States',
+            'lat' => 37.4229,
+            'lon' => -122.085,
+        ]);
 
         $info = $this->getGeo->getInfoByIp($ip);
 
-        $this->assertEquals($expectCity, $info['city']);
-        $this->assertEquals($expectCountry, $info['country']);
-        $this->assertEquals($expectLat, $info['lat']);
-        $this->assertEquals($expectLon, $info['lon']);
+        $this->assertEquals($expectInfo, $info);
     }
 }

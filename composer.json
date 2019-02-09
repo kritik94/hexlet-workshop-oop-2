@@ -14,7 +14,8 @@
     "require": {
         "php": ">=7.2",
         "guzzlehttp/guzzle": "6.3.3",
-        "tightenco/collect": "5.7.25"
+        "tightenco/collect": "5.7.25",
+        "danielstjules/stringy": "3.1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "8.0.2",
