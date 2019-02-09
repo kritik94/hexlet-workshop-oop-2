@@ -1,1 +1,5 @@
 /vendor/
+GPATH
+GRTAGS
+GTAGS
+.phpunit.result.cache
