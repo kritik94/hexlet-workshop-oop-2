@@ -19,7 +19,7 @@ class GetGeo
             ApiInterface::class => DI\autowire(IpApiService::class),
         ];
 
-        $this->container = (new DI\ContainerBuilder)
+        $this->container = (new DI\ContainerBuilder())
             ->useAutowiring(true)
             ->addDefinitions(array_replace_recursive($defenition, $additional))
             ->build();
