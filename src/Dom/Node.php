@@ -34,6 +34,6 @@ class Node
 
     public function isShort()
     {
-        return strlen($this->toString()) <= 10;
+        return mb_strlen($this->toString()) <= 10;
     }
 }
