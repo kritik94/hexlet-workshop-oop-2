@@ -9,6 +9,8 @@ use Stringy\Stringy;
 use \App\GetGeo\GetGeo;
 use \App\Weather\Weather;
 use \App\Weather\Api\CityNotFoundException;
+use \App\Dom\SingleTag;
+use \App\Dom\PairTag;;
 
 class Cli
 {
@@ -75,6 +77,18 @@ class Cli
             }
 
             echo $weatherInfo->toString() . PHP_EOL;
+        };
+    }
+
+
+    public static function createDomCli()
+    {
+        return function ($argv) {
+            $t1 = new PairTag('div', ['class' => 'row'], 'content');
+            $t2 = new SingleTag('ht');
+
+            dump($t1->toString());
+            dump($t2->toString());
         };
     }
 }
