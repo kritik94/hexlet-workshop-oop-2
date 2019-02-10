@@ -31,4 +31,9 @@ class Node
             })
             ->implode(' ');
     }
+
+    public function isShort()
+    {
+        return strlen($this->toString()) <= 10;
+    }
 }

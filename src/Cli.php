@@ -89,6 +89,8 @@ class Cli
 
             dump($t1->toString());
             dump($t2->toString());
+            dump($t1->isShort());
+            dump($t2->isShort());
         };
     }
 }
