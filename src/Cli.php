@@ -5,8 +5,10 @@ namespace App;
 use DI;
 use \GuzzleHttp\ClientInterface;
 use \GuzzleHttp\Client;
-use \App\GetGeo\GetGeo;
 use Stringy\Stringy;
+use \App\GetGeo\GetGeo;
+use \App\Weather\Weather;
+use \App\Weather\Api\CityNotFoundException;
 
 class Cli
 {
@@ -60,10 +62,19 @@ class Cli
             $posArgs = array_slice($argv, $optind);
 
             $city = $posArgs[0] ?? null;
+            $service = $opts['s'] ?? $opts['service'] ?? null;
 
-            $weatherApp = new Weather(['service' => $service]);
+            $weatherApp = new Weather();
 
-            dump($weather->getWeatherInCity($city));
+            try {
+                $weatherInfo = $weatherApp->getInfoByCity($city, [
+                    'service' => $service
+                ]);
+            } catch (CityNotFoundException $e) {
+                exit($e->getMessage() . PHP_EOL);
+            }
+
+            echo $weatherInfo->toString() . PHP_EOL;
         };
     }
 }
